@@ -91,11 +91,12 @@ const getRover = (state) => {
     // fetch(`http://localhost:3000/:name`)
     //     .then((res) => res.json())
     //     .then((rovers) => updateStore(store, {rovers}))
-    if ()
+
     return state.rovers.map(s => `<li><a href="${s}">${s}</a></li>`)
 }
 
 const getRoverData = (state) => {
+
     return `<ul>
                 <li>Name: ${name}</li>
                 <li>Launch date: </li>
@@ -117,11 +118,3 @@ const getImageOfTheDay = (state) => {
 
     return data;
 };
-
-const getRoverData = (state) => {
-    const { chosen } = state
-
-    fetch(`/${chosenRover}`)
-        .then(res => res.json())
-        .then(data => updateStore({ data }))
-}
