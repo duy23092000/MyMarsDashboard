@@ -25,9 +25,9 @@ app.get('/apod', async (req, res) => {
     }
 })
 
+// API call to get each rover's data base on their name and data of photos. If not, return to localhost:port
 app.get('/:name', async (req, res) => {
     const name = req.params.name.toLowerCase();
-    console.log('abc', name)
     let date = '2010-03-21';
     let url;
     switch (name) {
