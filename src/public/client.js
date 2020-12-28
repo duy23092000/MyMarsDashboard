@@ -61,20 +61,29 @@ const Greeting = (name) => {
 
 const displayRover = (state) => {
 
-    if (state.chosenRover === 'curiosity') {
-        let roverData = getRoverData(state);
-        // console.log("okkkkkkk")
-        console.log(roverData)
+    // Call the getRoverData method to get data when data is empty, otherwise the getRoverData will be recursive.
+    if (state.data == null) {
+        getRoverData(state)
     }
-    // const photos = state.data.results.photos;
+
+    switch (state.chosenRover) {
+        case 'curiosity':
+            let roverName = state.data.results.latest_photos[0].rover.name
+            let allUrl = state.data.results.latest_photos.map(photo => photo.img_src)
+            return `<h1>${roverName}</h1> ${allUrl.map(url => `<img src='${url}' height="100px" width="100px">`)}`;
+            break;
+        case 'opportunity':
+            let allOppUrl = state.data.results.photos.map(photo => photo.img_src)
+            return allOppUrl.map(url => `<img src='${url}' height="100px" width="100px">`);
+            break;
+        case 'spirit':
+            let allSpiUrl = state.data.results.photos.map(photo => photo.img_src)
+            return allSpiUrl.map(url => `<img src='${url}' height="100px" width="100px">`);
+            break;
+    }
     return `<button onclick="updateStore({chosenRover: 'curiosity'})">Curiosity</button>
             <button onclick="updateStore({chosenRover: 'opportunity'})">Opportunity</button>
             <button onclick="updateStore({chosenRover: 'spirit'})">Spirit</button>`
-}
-
-const testFunction = (state) => {
-    getRoverData(state)
-    // console.log(state)
 }
 
 // Example of a pure function that renders infomation requested from the backend
@@ -123,5 +132,5 @@ const getRoverData = (state) => {
     let { chosenRover } = state;
     fetch(`http://localhost:3000/${chosenRover}`)
         .then((res) => res.json())
-        .then((roverData) => updateStore({roverData}))
+        .then((data) => updateStore({data}))
 }
