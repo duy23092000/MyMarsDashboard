@@ -51,6 +51,7 @@ const Greeting = (name) => {
 
 const chooseRover = (state) => {
   // Call the getRoverData method to get data when data is empty, otherwise the getRoverData will be recursive.
+  // I learned this from https://github.com/jeffcad/Udacity-Intermediate-JavaScript-Nanodegree-Project-2
   if (!state.data) {
     getRoverData(state);
   }
