@@ -1,3 +1,4 @@
+// An Immutable Map to store the data
 let store = Immutable.Map({
   name: "Student",
   apod: "",
@@ -54,6 +55,8 @@ const chooseRover = (state) => {
     getRoverData(state);
   }
 
+  // Render image and information for each rover that user choose
+  // Only the case "curiosity" get the latest photos, otherwise will get the photos on the day that I set up from the server
   let roverName;
   let roverLaunchDate;
   let roverLandingDate;
@@ -69,16 +72,16 @@ const chooseRover = (state) => {
       let allCurUrl = state.data.results.latest_photos.map(
         (photo) => photo.img_src
       );
-      return `<ul>
+      return `<button onclick="updateStore({chosenRover: '', data: ''})">Back to home</button>
+              <ul>
                 <li><h1>Rover Name: ${roverName}</h1></li>
                 <li><h3>Launch Date: ${roverLaunchDate}</h3></li>
                 <li><h3>Landing Date: ${roverLandingDate}</h3></li>
                 <li><h3>Rover Status: ${roverStatus}</h3></li>
                 <li><h3>Latest photo date: ${roverLatestPhotoDate}</h3></li>
               </ul>
-              <div class='gallery'>
-                    ${allCurUrl.map((url) => `<img src='${url}' style='width:600' height:'400'>`)} 
-              </div>`;
+                ${allCurUrl.map((url) => `<img src='${url}' style='width: 200px height: 200px'>`)}
+               `;
     case "opportunity":
       roverName = state.data.results.photos[0].rover.name;
       roverLaunchDate = state.data.results.photos[0].rover.launch_date;
@@ -93,8 +96,8 @@ const chooseRover = (state) => {
                 <li><h3>Rover Status: ${roverStatus}</h3></li>
                 <li><h3>Latest photo date: ${roverLatestPhotoDate}</h3></li>
               </ul> 
-              ${allOppUrl.map((url) => `<img src='${url}' style='width:70%'>`
-      )}`;
+                ${allOppUrl.map((url) => `<img src='${url}'>`)}
+              `;
     case "spirit":
       roverName = state.data.results.photos[0].rover.name;
       roverLaunchDate = state.data.results.photos[0].rover.launch_date;
@@ -110,13 +113,13 @@ const chooseRover = (state) => {
                 <li><h3>Rover Status: ${roverStatus}</h3></li>
                 <li><h3>Latest photo date: ${roverLatestPhotoDate}</h3></li>
             </ul>
-            ${allSpiUrl.map((url) => `<img src='${url}' style='width:70%'>`
-      )}`;
+              ${allSpiUrl.map((url) => `<img src='${url}'>`)}`;
   }
 
-  // When I put the updateStore inside ${}expression, all things will be recursive again, so I put it all in a string
+  // When I put the updateStore inside ${} expression, all things will be recursive again, so I put it all in a string
+  // Each time when the button is clicked, it will update the store and put a chosen rover in it
   return `
-        <div class="button-container">
+        <div>
             <button onclick="updateStore({chosenRover: 'curiosity'})">Curiosity</button>
             <button onclick="updateStore({chosenRover: 'opportunity'})">Opportunity</button>
             <button onclick="updateStore({chosenRover: 'spirit'})">Spirit</button>  
@@ -130,7 +133,7 @@ const chooseRover = (state) => {
 
 // Example API call
 
-//API Call to get each chosenRover's data
+//API Call to get each chosenRover's data and update the store each when I call it
 const getRoverData = (state) => {
   let { chosenRover } = state;
   fetch(`http://localhost:3000/${chosenRover}`)
