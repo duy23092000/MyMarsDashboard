@@ -29,7 +29,8 @@ body {
   background-repeat: no-repeat;
   background-size: 100% 30px;
   background-position: top left, bottom left;
-  min-height: 120vh;
+  max-height: 100vh;
+  height: 80%;
 }
 
 div {
@@ -107,8 +108,8 @@ button .backBtn {
 @media (min-width: 1224px) {
   /* use mobile */
     div {
-        max-width: 1300px;
-        width: 100%;
+        max-width: 1224px;
+        width: 85%;
     }
 }
 
@@ -117,7 +118,7 @@ button .backBtn {
 @media (min-width: 1824px) {
   /* use mobile */
     div {
-        max-width: 2000px;
-        width: 70%;
+        max-width: 1824px;
+        width: 100%;
     }
 }

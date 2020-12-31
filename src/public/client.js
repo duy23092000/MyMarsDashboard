@@ -1,7 +1,7 @@
 // An Immutable Map to store the data
 let store = Immutable.Map({
   name: "Student",
-  chosenRover: ""
+  chosenRover: "",
 });
 
 // add our markup to the page
@@ -45,7 +45,6 @@ const Greeting = (name) => {
     `;
 };
 
-
 const chooseRover = (state) => {
   // Call the getRoverData method to get data when data is empty, otherwise the getRoverData will be recursive.
   // I learned this from https://github.com/jeffcad/Udacity-Intermediate-JavaScript-Nanodegree-Project-2
@@ -57,11 +56,11 @@ const chooseRover = (state) => {
   // Only the case "curiosity" get the latest photos, otherwise will get the photos on the day that I set up from the server
   switch (state.chosenRover) {
     case "curiosity":
-      return `${getRoverInfo(state,"latest_photos")}`
+      return `${getRoverInfo(state, "latest_photos")}`;
     case "opportunity":
-      return `${getRoverInfo(state,"photos")}`
+      return `${getRoverInfo(state, "photos")}`;
     case "spirit":
-      return `${getRoverInfo(state,"photos")}`
+      return `${getRoverInfo(state, "photos")}`;
   }
 
   // When I put the updateStore inside ${} expression, all things will be recursive again, so I put it all in a string
@@ -72,7 +71,7 @@ const chooseRover = (state) => {
             <button onclick="updateStore({chosenRover: 'opportunity'})">Opportunity</button>
             <button onclick="updateStore({chosenRover: 'spirit'})">Spirit</button>  
         </div>
-        `     
+        `;
 };
 
 // Method to render information to UI
@@ -85,20 +84,18 @@ const getRoverInfo = (state, photoType) => {
   let photoUrl;
   let photo;
   if (photoType == "latest_photos") {
-    photo = state.roverData?.results.latest_photos
-  }else if (photoType == "photos") {
-    photo = state.roverData?.results.photos
+    photo = state.roverData?.results.latest_photos;
+  } else if (photoType == "photos") {
+    photo = state.roverData?.results.photos;
   }
 
-  if (photo){
+  if (photo) {
     roverName = photo[0].rover.name;
     roverLaunchDate = photo[0].rover.launch_date;
     roverLandingDate = photo[0].rover.landing_date;
     roverStatus = photo[0].rover.status;
     roverLatestPhotoDate = photo[0].earth_date;
-    photoUrl = photo.map(
-      (photo) => photo.img_src
-    );
+    photoUrl = photo.map((photo) => photo.img_src);
 
     return `<button class="backBtn" onclick="updateStore({chosenRover: '', roverData: ''})">Back to home</button>
               <ul>
@@ -108,14 +105,15 @@ const getRoverInfo = (state, photoType) => {
                 <li><h3>Rover Status: ${roverStatus}</h3></li>
                 <li><h3>Latest photo date: ${roverLatestPhotoDate}</h3></li>
               </ul>
-                ${photoUrl?.map((url) => `<img src='${url}' style='width: 200px height: 200px'>`)}
+                ${photoUrl?.map(
+                  (url) =>
+                    `<img src='${url}' style='width: 200px height: 200px'>`
+                )}
                `;
-  }else {
-    return 'Loading ...'
+  } else {
+    return "Loading ...";
   }
-}
-
-
+};
 
 // ------------------------------------------------------  API CALLS
 
